@@ -1,0 +1,65 @@
+rules: 
+  - id: aegis.prompt-injection-fstring 
+    patterns:	
+      - pattern: |	
+          f"...{$USER_INPUT}..." 
+      - metavariable-regex: 
+          metavariable: $USER_INPUT	
+          regex: ".*(?:user|input|query|request|message|prompt|data).*"	
+    message: > 
+      User-controlled input '$USER_INPUT' is interpolated directly into a 
+      prompt string. An attacker can inject instructions that override the	
+      system prompt (prompt injection).	
+    fix: >	
+      Use structured prompt templates with explicit variable slots. 
+      Sanitize or escape user input before inclusion. 
+    languages: [python] 
+    severity: ERROR 
+    metadata: 
+      category: injection	
+      aegis_category: prompt_injection	
+      cwe: ["CWE-77"] 
+
+  - id: aegis.prompt-injection-format 
+    pattern: |	
+      "...".format(..., $USER_INPUT, ...)	
+    message: > 
+      User input passed to .format() in a prompt string. This enables 
+      prompt injection attacks where an attacker can manipulate LLM behaviour.	
+    languages: [python]	
+    severity: ERROR	
+    metadata: 
+      category: injection 
+      aegis_category: prompt_injection	
+
+  - id: aegis.prompt-injection-concat-js 
+    patterns:	
+      - pattern: |	
+          $PROMPT + $USER_INPUT 
+      - metavariable-regex: 
+          metavariable: $USER_INPUT	
+          regex: ".*(?:user|input|query|req|body|params).*" 
+    message: >	
+      User input is concatenated into an LLM prompt. Use parameterised 
+      templates to prevent prompt injection.	
+    languages: [javascript, typescript]	
+    severity: ERROR 
+    metadata: 
+      category: injection	
+      aegis_category: prompt_injection 
+
+  - id: aegis.prompt-injection-template-literal 
+    patterns: 
+      - pattern: |	
+          `...${$USER_INPUT}...`	
+      - metavariable-regex: 
+          metavariable: $USER_INPUT 
+          regex: ".*(?:user|input|query|req|body|params|message).*"	
+    message: > 
+      User input embedded in a template literal used as a prompt.	
+      This is vulnerable to prompt injection. 
+    languages: [javascript, typescript] 
+    severity: ERROR	
+    metadata:	
+      category: injection 
+      aegis_category: prompt_injection	

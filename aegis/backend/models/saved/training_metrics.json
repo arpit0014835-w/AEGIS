@@ -1,0 +1,188 @@
+{
+  "accuracy": 0.6827676240208878,
+  "precision": 0.5587431693989071,
+  "recall": 0.715034965034965,
+  "f1_score": 0.6273006134969326,
+  "roc_auc": 0.7649402680652682,
+  "confusion_matrix": {
+    "true_negatives": 637,
+    "false_positives": 323,
+    "false_negatives": 163,
+    "true_positives": 409
+  },
+  "feature_importance": [
+    {
+      "feature": "trailing_whitespace_ratio",
+      "importance": 0.05695917829871178
+    },
+    {
+      "feature": "max_identifier_length",
+      "importance": 0.05062786862254143
+    },
+    {
+      "feature": "ast_node_count",
+      "importance": 0.043737854808568954
+    },
+    {
+      "feature": "avg_line_length",
+      "importance": 0.04261920973658562
+    },
+    {
+      "feature": "inline_comment_ratio",
+      "importance": 0.040512148290872574
+    },
+    {
+      "feature": "char_entropy",
+      "importance": 0.03995691239833832
+    },
+    {
+      "feature": "std_indentation",
+      "importance": 0.03804866224527359
+    },
+    {
+      "feature": "identifier_entropy",
+      "importance": 0.03722900152206421
+    },
+    {
+      "feature": "token_entropy",
+      "importance": 0.03663387522101402
+    },
+    {
+      "feature": "try_except_ratio",
+      "importance": 0.032481856644153595
+    },
+    {
+      "feature": "avg_indentation",
+      "importance": 0.030260687693953514
+    },
+    {
+      "feature": "blank_line_ratio",
+      "importance": 0.030241968110203743
+    },
+    {
+      "feature": "std_identifier_length",
+      "importance": 0.03005881980061531
+    },
+    {
+      "feature": "avg_function_complexity",
+      "importance": 0.02972692809998989
+    },
+    {
+      "feature": "std_line_length",
+      "importance": 0.02946813963353634
+    },
+    {
+      "feature": "max_indentation",
+      "importance": 0.029113339260220528
+    },
+    {
+      "feature": "cyclomatic_complexity",
+      "importance": 0.028753098100423813
+    },
+    {
+      "feature": "builtin_usage_count",
+      "importance": 0.026871835812926292
+    },
+    {
+      "feature": "underscore_prefix_ratio",
+      "importance": 0.024782463908195496
+    },
+    {
+      "feature": "max_nesting_depth",
+      "importance": 0.02169862948358059
+    },
+    {
+      "feature": "ast_depth",
+      "importance": 0.02154172956943512
+    },
+    {
+      "feature": "max_line_length",
+      "importance": 0.021504458039999008
+    },
+    {
+      "feature": "operator_diversity",
+      "importance": 0.02127954736351967
+    },
+    {
+      "feature": "has_docstrings",
+      "importance": 0.02124572917819023
+    },
+    {
+      "feature": "if_ratio",
+      "importance": 0.02105388231575489
+    },
+    {
+      "feature": "num_classes",
+      "importance": 0.01863904856145382
+    },
+    {
+      "feature": "ast_branching_factor",
+      "importance": 0.01801987551152706
+    },
+    {
+      "feature": "single_char_ratio",
+      "importance": 0.017224028706550598
+    },
+    {
+      "feature": "comment_density",
+      "importance": 0.016965843737125397
+    },
+    {
+      "feature": "num_functions",
+      "importance": 0.016744079068303108
+    },
+    {
+      "feature": "for_loop_ratio",
+      "importance": 0.016537440940737724
+    },
+    {
+      "feature": "ast_unique_node_types",
+      "importance": 0.016145015135407448
+    },
+    {
+      "feature": "keyword_ratio",
+      "importance": 0.016074778512120247
+    },
+    {
+      "feature": "snake_case_ratio",
+      "importance": 0.015441365540027618
+    },
+    {
+      "feature": "unique_token_ratio",
+      "importance": 0.01491519808769226
+    },
+    {
+      "feature": "while_loop_ratio",
+      "importance": 0.014776271767914295
+    },
+    {
+      "feature": "avg_identifier_length",
+      "importance": 0.012109274044632912
+    },
+    {
+      "feature": "import_count",
+      "importance": 0.0
+    },
+    {
+      "feature": "bigram_repetition_score",
+      "importance": 0.0
+    }
+  ],
+  "test_samples": 1532,
+  "model_type": "XGBoost",
+  "best_params": {
+    "n_estimators": 200,
+    "max_depth": 5,
+    "learning_rate": 0.018682162531630755,
+    "subsample": 0.8810226614209592,
+    "colsample_bytree": 0.896531171023519,
+    "min_child_weight": 2,
+    "reg_alpha": 5.009784717462873e-08,
+    "reg_lambda": 0.7855117670447308,
+    "gamma": 0.2052228515468409,
+    "scale_pos_weight": 1.6821808510638299,
+    "random_state": 42,
+    "eval_metric": "logloss",
+    "use_label_encoder": false
+  }
+}

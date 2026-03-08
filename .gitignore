@@ -1,0 +1,21 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Node
+node_modules/
+.next/
+
+# Large training data (regenerable)
+all_data_with_ada_embeddings_will_be_splitted_into_train_test_set.csv
+
+# Temp files
+*.tmp
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

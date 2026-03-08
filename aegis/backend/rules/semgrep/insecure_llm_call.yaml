@@ -1,0 +1,69 @@
+rules: 
+  - id: aegis.hardcoded-openai-key 
+    patterns:	
+      - pattern-either:	
+          - pattern: openai.api_key = "..." 
+          - pattern: | 
+              $CLIENT = openai.OpenAI(api_key="...")	
+    message: >	
+      OpenAI API key is hardcoded in source code. This will be exposed if 
+      the repository is public or if the codebase is shared. 
+    fix: Use environment variables — os.environ["OPENAI_API_KEY"]	
+    languages: [python]	
+    severity: ERROR	
+    metadata: 
+      category: security 
+      aegis_category: hardcoded_secret 
+      cwe: ["CWE-798"] 
+
+  - id: aegis.eval-llm-output 
+    patterns:	
+      - pattern-either:	
+          - pattern: eval($RESPONSE) 
+          - pattern: exec($RESPONSE) 
+      - metavariable-regex:	
+          metavariable: $RESPONSE	
+          regex: ".*(?:response|result|output|completion|content|text|message).*" 
+    message: > 
+      LLM output is passed directly to eval()/exec(). This enables	
+      arbitrary code execution if the model output is manipulated.	
+    fix: >	
+      Never execute LLM outputs. Parse them into structured data and 
+      validate before use. Consider using AST parsing and sandboxing. 
+    languages: [python]	
+    severity: ERROR 
+    metadata:	
+      category: security	
+      aegis_category: unvalidated_ai_output 
+      cwe: ["CWE-94"] 
+
+  - id: aegis.no-error-handling-openai	
+    patterns: 
+      - pattern: |	
+          $RESPONSE = $CLIENT.chat.completions.create(...) 
+      - pattern-not-inside: |	
+          try:	
+              ... 
+    message: > 
+      OpenAI API call without error handling. Rate limits, network failures,	
+      and API errors will crash the application. 
+    fix: > 
+      Wrap in try/except with retries for transient errors and proper 
+      fallback logic for API failures.	
+    languages: [python]	
+    severity: WARNING 
+    metadata: 
+      category: reliability	
+      aegis_category: missing_error_handling 
+
+  - id: aegis.insecure-llm-no-content-filter	
+    pattern: | 
+      $CLIENT.chat.completions.create(..., temperature=$TEMP, ...) 
+    message: >	
+      LLM call detected. Ensure output content filtering is enabled,	
+      especially for user-facing applications. 
+    languages: [python]	
+    severity: INFO	
+    metadata: 
+      category: security
+      aegis_category: insecure_llm_call

@@ -1,0 +1,50 @@
+rules: 
+  - id: aegis.ai-hallucinated-import 
+    patterns:	
+      - pattern: import $PACKAGE	
+      - metavariable-regex: 
+          metavariable: $PACKAGE 
+          regex: "^[a-zA-Z_][a-zA-Z0-9_]*$"	
+    message: >	
+      Suspicious import detected — verify that '$PACKAGE' exists in the 
+      target package registry. AI code generators frequently hallucinate 
+      package names that do not exist, creating supply-chain attack vectors.	
+    languages: [python]	
+    severity: WARNING	
+    metadata: 
+      category: supply-chain 
+      technology: [python] 
+      aegis_category: hallucinated_dependency 
+      references: 
+        - https://www.theregister.com/2024/03/28/ai_bots_hallucinate_software_packages/	
+
+  - id: aegis.ai-hallucinated-import-from	
+    patterns: 
+      - pattern: from $MODULE import ... 
+      - metavariable-regex:	
+          metavariable: $MODULE	
+          regex: "^[a-zA-Z_][a-zA-Z0-9_.]*$" 
+    message: > 
+      Verify that the module '$MODULE' exists in PyPI. AI code generators	
+      may invent package names that could be registered by attackers	
+      (dependency confusion / typosquatting).	
+    languages: [python] 
+    severity: WARNING 
+    metadata:	
+      category: supply-chain 
+      aegis_category: hallucinated_dependency	
+
+  - id: aegis.ai-hallucinated-npm-import	
+    patterns: 
+      - pattern: import $X from "$PACKAGE" 
+      - metavariable-regex:	
+          metavariable: $PACKAGE 
+          regex: "^[a-zA-Z@][a-zA-Z0-9./_-]*$"	
+    message: > 
+      Verify that the npm package '$PACKAGE' exists. AI tools may generate	
+      import statements for non-existent packages.	
+    languages: [javascript, typescript] 
+    severity: WARNING 
+    metadata:	
+      category: supply-chain 
+      aegis_category: hallucinated_dependency 
