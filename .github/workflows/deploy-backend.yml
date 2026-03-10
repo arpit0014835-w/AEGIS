@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: AEGIS
+  AZURE_WEBAPP_NAME: aegis-gcdbbhgmgrbcfnhf
   PYTHON_VERSION: '3.12'
 
 jobs:
