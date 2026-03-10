@@ -1,11 +1,6 @@
-name: Deploy Frontend to Azure
+name: Deploy Frontend to Azure (DEPRECATED - use SWA workflow)
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'aegis/frontend/**'
-      - '.github/workflows/deploy-frontend.yml'
   workflow_dispatch:
 
 env:
