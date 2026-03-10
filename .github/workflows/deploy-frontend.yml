@@ -1,0 +1,48 @@
+name: Deploy Frontend to Azure
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'aegis/frontend/**'
+      - '.github/workflows/deploy-frontend.yml'
+  workflow_dispatch:
+
+env:
+  AZURE_WEBAPP_NAME: AEGIS-frontend
+  NODE_VERSION: '20'
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy Frontend
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        working-directory: aegis/frontend
+        run: npm ci --legacy-peer-deps || npm install
+
+      - name: Build
+        working-directory: aegis/frontend
+        env:
+          NEXT_PUBLIC_API_URL: https://aegis.azurewebsites.net
+        run: npm run build
+
+      - name: Zip artifact for deployment
+        working-directory: aegis/frontend
+        run: |
+          zip -r ../../frontend-release.zip . -x "node_modules/*" ".next/cache/*"
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_FRONTEND }}
+          package: frontend-release.zip
