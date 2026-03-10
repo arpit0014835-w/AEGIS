@@ -49,6 +49,7 @@ resource backendApp 'Microsoft.App/containerApps@2023-05-01' = {
         external: false
         targetPort: 8000
         transport: 'http'
+        allowInsecure: true
       }
       secrets: [
         { name: 'redis-url', value: redisConnectionString }
@@ -70,6 +71,7 @@ resource backendApp 'Microsoft.App/containerApps@2023-05-01' = {
             { name: 'AZURE_OPENAI_API_KEY', secretRef: 'openai-key' }
             { name: 'APP_ENV', value: 'production' }
             { name: 'DEBUG', value: 'false' }
+            { name: 'CORS_ORIGINS', value: 'https://${environmentName}-frontend.${containerAppEnv.properties.defaultDomain}' }
           ]
         }
       ]
@@ -153,8 +155,8 @@ resource frontendApp 'Microsoft.App/containerApps@2023-05-01' = {
           }
           env: [
             {
-              name: 'NEXT_PUBLIC_API_URL'
-              value: 'https://${backendApp.properties.configuration.ingress.fqdn}/api/v1'
+              name: 'BACKEND_URL'
+              value: 'https://${backendApp.properties.configuration.ingress.fqdn}'
             }
           ]
         }

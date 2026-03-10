@@ -32,7 +32,8 @@ jobs:
       - name: Build
         working-directory: aegis/frontend
         env:
-          NEXT_PUBLIC_API_URL: https://aegis.azurewebsites.net
+          NEXT_PUBLIC_API_URL: https://aegis-gcdbbhgmgrbcfnhf.eastasia-01.azurewebsites.net/api/v1
+          NEXT_PUBLIC_API_BASE: https://aegis-gcdbbhgmgrbcfnhf.eastasia-01.azurewebsites.net
         run: npm run build
 
       - name: Zip artifact for deployment

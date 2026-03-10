@@ -36,9 +36,15 @@ jobs:
         run: |
           zip -r ../../backend-release.zip . -x "__pycache__/*" "*.pyc" "tmp/*"
 
+      - name: Stop App before deploy
+        run: |
+          sleep 10
+
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_BACKEND }}
           package: backend-release.zip
+          clean: true
+          restart: true

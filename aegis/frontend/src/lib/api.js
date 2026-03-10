@@ -3,7 +3,7 @@
  * Centralised API communication layer.	
  */	
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1'; 
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || '/api/v1'; 
 
 /** 
  * Generic fetch wrapper with error handling.	
@@ -51,8 +51,8 @@ export async function uploadScan(file) {
 
     const url = `${API_BASE}/scans/upload`; 
     const response = await fetch(url, { 
-        method: 'POST',	
-        body: formData, 
+        method: 'POST',
+        body: formData,
     }); 
 
     if (!response.ok) { 
