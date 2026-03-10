@@ -32,7 +32,7 @@ class Settings(BaseSettings):
     # ─── Server ─────────────────────────────────────────────────	
     backend_host: str = "0.0.0.0" 
     backend_port: int = 8000 
-    cors_origins: str = "http://localhost:3000"	
+    cors_origins: str = "*"	
 
     # ─── Redis ──────────────────────────────────────────────────	
     redis_url: str = "redis://localhost:6379/0"	
